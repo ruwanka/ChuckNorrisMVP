@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     public void showProgressBar(boolean show) {
         if(show){
-            progressDialog = ProgressDialog.show(this, null, "Loading...", false, false);
+            progressDialog = ProgressDialog.show(this, null, getString(R.string.loading), false, false);
         }else{
             if(progressDialog != null){
                 progressDialog.dismiss();
