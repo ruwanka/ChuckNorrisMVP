@@ -1,9 +1,12 @@
 package com.example.ruwa.chucknorrismvp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class RandomJoke {
+public class RandomJoke implements Parcelable{
 
     @SerializedName("type")
     @Expose
@@ -11,6 +14,23 @@ public class RandomJoke {
     @SerializedName("value")
     @Expose
     private Joke joke;
+
+    protected RandomJoke(Parcel in) {
+        type = in.readString();
+        joke = in.readParcelable(Joke.class.getClassLoader());
+    }
+
+    public static final Creator<RandomJoke> CREATOR = new Creator<RandomJoke>() {
+        @Override
+        public RandomJoke createFromParcel(Parcel in) {
+            return new RandomJoke(in);
+        }
+
+        @Override
+        public RandomJoke[] newArray(int size) {
+            return new RandomJoke[size];
+        }
+    };
 
     public String getType() {
         return type;
@@ -28,4 +48,14 @@ public class RandomJoke {
         this.joke = joke;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeString(type);
+        parcel.writeParcelable(joke, flags);
+    }
 }
